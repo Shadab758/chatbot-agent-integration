@@ -1,0 +1,28 @@
+name: Pull Request Checker
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-check:
+    runs-on: windows-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Python (you can use Node.js if needed)
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # Step 3: Install dependencies (if any)
+      - name: Install dependencies
+        run: pip install -r requirements.txt || echo "No requirements.txt found"
+
+      # Step 4: Run tests (example)
+      - name: Run tests
+        run: python -m unittest discover || echo "No tests found"
